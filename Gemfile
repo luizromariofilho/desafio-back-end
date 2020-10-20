@@ -13,6 +13,8 @@ gem 'puma', '~> 4.1'
 gem 'redis-rails'
 gem 'sidekiq'
 
+gem 'webpacker'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

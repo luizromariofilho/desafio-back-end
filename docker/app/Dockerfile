@@ -1,11 +1,14 @@
 FROM ruby:latest
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y build-essential nodejs yarn postgresql-client
 RUN mkdir /pagnet
 WORKDIR /pagnet
 COPY Gemfile /pagnet/Gemfile
 COPY Gemfile.lock /pagnet/Gemfile.lock
 RUN bundle install
 COPY . /pagnet
+RUN yarn install --check-files
 
 # Add a script to be executed every time the container starts.
 COPY ./docker/app/entrypoint.sh /usr/bin/
